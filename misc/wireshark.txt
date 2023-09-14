@@ -1,0 +1,32 @@
+===== DAYTIME =====
+1. TCP handshake
+1  0.000000000  192.168.116.128	  129.6.15.28		TCP	74	44574 → 13 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=2255524356 TSecr=0 WS=128
+2  0.033354911  129.6.15.28	  192.168.116.128	TCP	60	13 → 44574 [SYN, ACK] Seq=0 Ack=1 Win=64240 Len=0 MSS=1460
+3  0.033395112  192.168.116.128	  129.6.15.28		TCP	54	44574 → 13 [ACK] Seq=1 Ack=1 Win=64240 Len=0
+(1. "Can we talk?", 2. "Yep", 3. "Great")
+
+2. 44574
+3. The computer has lots of processes happening and needs this information to be send to the right one
+4. 4	0.066471983	129.6.15.28	192.168.116.128	DAYTIME	105	DAYTIME Response
+5. Daytime: \n60201 23-09-14 15:10:39 50 0 0 567.7 UTC(NIST) * \n
+   We can see date (23-09-14, yy-mm-dd) and time (15:10:39, hh:mm:ss). We see time zone (UTC) and source (NIST).  I can't figure out what the last number is-it seems to vary wildly
+6. Syncronize--request to connect
+7. Acknowledge--says OK
+8. Finished--says we're done talking
+9. The nc client. We see a FIN request sent from my IP to the daytime server (which sends an ACK back):
+    5	0.066184467	192.168.116.128	129.6.15.28	TCP	54	48004 → 13 [FIN, ACK] Seq=1 Ack=53 Win=64188 Len=0
+
+
+
+===== HTTP =====
+
+1. Two TCP connections were opened. Two TCP handshakes happen at once at the very start, on from port 41172 and one from port 41178. The first 4 messages are the only [SYN] messages so there can't be more handshakes.
+2. 7	0.051351659	192.168.116.128	45.79.89.123	HTTP	408	GET /index.html HTTP/1.1 
+3. 11	0.160358782	192.168.116.128	45.79.89.123	HTTP	377	GET /jeff_square_head.jpg HTTP/1.1 
+
+
+===== QUESTIONS =====
+-What are all the interactions that happen after the head is sent? like
+	34	21.630574194	45.79.89.123	192.168.116.128	TCP	60	[TCP Keep-Alive ACK] 80 → 41172 [ACK] Seq=80336 Ack=324 Win=64240 Len=0
+-What were the other numbers in the Daytime protocol?
+-Why were there two TCP handshakes for loading the webpage from different ports?

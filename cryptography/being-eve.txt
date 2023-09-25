@@ -1,0 +1,72 @@
+Diffie Hellman:
+
+Alice and Bob agree g=7 and p=61
+
+Alice sends Bob 30
+Bob sends Alice 17
+
+If Alice's secret number is x and Bobs is y, we know that Alice sent bob A=30=g**x mod p.
+Likewise, B=17=g**y mod p
+
+We can brute force these using a simple python function:
+
+def solve_DHKE(g, p, A, B):
+    x = 1
+    power = g
+    while power % p != A:
+        x += 1
+        power *= g
+    return B ** x % p
+
+Running this with g=7, p=61, A=30, B=17 gives us 6, which is the secret they agreed on.
+With much larger numbers, this would take far too long to run. p is supposed to be several hundred digits long.
+We expect the time taken to find x to be proportional to p's size. If it took just 1 nanosecond to check an x, it would take somewhere around 10^80 years to crack
+Better ways to find x exist and are much faster than brute force, but still not fast enough for sufficiently large numbers.
+
+
+
+
+RSA:
+
+We can find the factors used to create the public key by brute forcing the factors, then find the hidden key, with this python code:
+
+import math
+def solve_RSA(e, n):
+    # since n is a multiple of two primes and having 2 be a factor would be colossally stupid, assume n is odd
+    f1 = 3
+    while n % f1 != 0:
+        f1 += 2
+    f2 = n // f1
+
+    lcm = math.lcm(f1-1,f2-1)
+
+    d = 1
+    while (e * d) % lcm != 1:
+        d += 1
+    return d
+
+
+Once we have the hidden key, we can use this python function to decrypt the message:
+
+def decrypt_RSA(d, n, message):
+    decrypted = []
+    for char in message:
+        decrypted.append(char**d % n)
+    return decrypted
+
+But this isn't ascii! The provided message is hex encoded. So, we use one more python function to get the original text.
+
+def hex_to_text(h):
+    s = ""
+    for byte in h:
+        s += bytearray.fromhex(hex(byte)[2:]).decode()
+    return s
+
+When run with the provided values (public key of (17, 170171) and the provided message string) we find the output of:
+Hi Bob. I'm walking from now on. Your pal, Alice. https://foundation.mozilla.org/en/privacynotincluded/articles/its-official-cars-are-the-worst-product-category-we-have-ever-reviewed-for-privacy/
+
+This approach would fail when we try to factor the large numbers, same as for RSA. The approach is O(n) and n gets *really* big.
+
+Even if n was much bigger, this method of encyrption would be vulnerable to frequency analysis.
+Hex encoding makes this less of a problem since individual characters can't be recognized, so for short messages such as this one it would be fine.
+But for large messages, some pairs of characters would still appear commonly and statistical methods could be used to find what two-character sequences different parts of the encrypted text correspond to.

@@ -1,0 +1,25 @@
+1. Use Diffie-Hellmen, to get some shared secret K. Send AES(K, M) to Bob. Bob simply performs D_AES(K, C).
+
+2. Send Bob M || E(S_A, H(M)). Mal can decrypt the signature using Alice's public key, but can't reencrypt it with Alice's private key. So when Bob receives the message he can decrypt the signature and compute H(M) himself to make sure it matches what Alice said.
+
+3. Bob generates a random number R and sends it to Alice. Alice sends Bob E(P_B, M) || E(S_A, R). Bob can tell the message was made by Alice because it used Alice's secret key to read it. Eve can't read the message because it's encrypted with Bob's public key.
+
+4. a) Someone brute forced Alice's secret key. Very unlikely, the math does not work unless someone is hiding a quantum computer far beyond anything thought to be currently possible.
+
+   b) Bob decrypted Alice's message using the wrong protocol and happened to end up with a different contract. EXTREMELY unlikely, monkeys usually need to try more than ond to write Shakespeare.
+
+   c) Someone at Alice (illegally) changed the message before sending. This is much more likely, since its very hard to change the message after its been encrypted
+
+   d) An attacker in the middle saw Bob's R and sent Alice a request for a different contract pretending to be Bob and using the same R. Then, they took what Alice sent them and sent it to Bob, so Bob received the wrong contract but with all credentials.
+
+   e) An attacker in the middle took Alice's signature (i.e. E(S_A, R)) but created a new message and encrypted it with Bob's public key before sending it to Bob.
+
+5. Sig_CA = E(S_SA, H("bob.com" || P_B)). Anyone can compute  H("bob.com" || P_B), and everyone knows P_SA, so if the message is changed then the hash will no longer match the message contents. Nobody besides the CA can create a message encrypted with S_CA so it can't be changed then reencrypted.
+
+6. First, Alice and Bob do Diffie-Hellmen to get K, so everyone has g, p, g^a mod p, g^b mod p. Then, Alice needs to challenge Bob. She picks a number R and sends AES(K, R) to Bob, and Bob responds with E(S_B, H(R || g^b mod p)). Alice decrypts it with Bob's public key and computes the hash herself and compares them. Mal can't change this message; they can decrypt it with P_B, but can't reencrypt it since they don't have S_B. If there was an AITM attack, Alice will have g^m mod p and think its g^b mod p, so if Mal just passes along the message from Bob, Alice will know something is wrong. Only Bob both has the correct DHE values and P_B to create this message.
+
+7. a) If anyone gets their hands on S_SA, they could fool anyone and everyone. That would be really bad.
+
+   b) If Mal somehow happened or managed to pick the same b as Bob from the DHE, they could just pass along Bob's message. This probably couldn't be done without inside access to at least Bob's system, which comes with other problems anyway.
+
+   c) If Mal managed to find a different set of credentials that created a CA hash equal to H("bob.com" || P_B) (i.e. a hash collision), there's already a certificate signature confirming any credentials with that hash. So they can now appear legitimate for the newly found credentials.

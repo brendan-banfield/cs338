@@ -1,3 +1,5 @@
+Brendan Banfield (worked alone)
+
 1. Use Diffie-Hellmen, to get some shared secret K. Send AES(K, M) to Bob. Bob simply performs D_AES(K, C).
 
 2. Send Bob M || E(S_A, H(M)). Mal can decrypt the signature using Alice's public key, but can't reencrypt it with Alice's private key. So when Bob receives the message he can decrypt the signature and compute H(M) himself to make sure it matches what Alice said.

@@ -1,0 +1,17 @@
+All by Brendan Banfield
+Scenario #1
+A. The main question is whether you are morally obligated to report the bug if it brings risk of retialition onto yourself. Another question that may be relevant is whether you deserve or should seek financial compensation for your work, or recognition in the ethical hacking community.
+B. You have a right to not be fined or put in jail when you haven't done anything wrong. The users of InstaToonz have a right to private messages remaining unreadable by others. InstaToonz has the right to fix the bug before you make it public.
+C. It's unclear how bad things were for the previous bug reporter. If the case was thrown out of court and then InstaToonz went away, you have much less to worry about. If they had to spend money and time in court, you may want to be more concerned.
+   It also may be important to know who owns the copyrights to DM conversations--is it the users, or do the terms and conditions specify that InstaToonz owns them? If it does, will that stand up in court?
+D. You could:
+	-privately, non-anonymously report the bug. This would get it fixed, but InstaToonz would likely come after you. You would get recognition for finding the bug whether you want it or not.
+	-privately, anonymously report the bug. It would get fixed, but if you tried to notify the public afterwards InstaToonz might still come after you. You might not get recognition.
+	-Publicize the bug. In the time before it was fixed, the vulnerability could be exploited any number of times. InstaToonz would likely have a legitimate court case against you in this case.
+	-Don't do anything. If someone less scrupulous finds the bug, they could exploit it forever and nobody would know. You would be completely safe, though.
+E. 1.1 (contribute to human well-being) suggests you should report the bug. 1.2 (avoid harm) tells you to do it privately. 1.3 reinforces both. 1.6 (respect privacy) tells you not to abuse the bug before it is fixed. 
+F. Morally, you do need to report the bug privately. But if you want to, you could do it anonymously, either directly or through one of the companies that deals with this such as VCP or ZDI. There probably isn't much InstaToonz could do about an anonymous report (or really any report, but best to be safe).
+   If you do want recognition, you could perhaps claim in the right internet circles that you found it, in a way that wouldn't be admissible in court. For example, say something like "I just found a significant vulnerability in InstaToonz" before notifying them, but still notify them anonymously.
+   After its fixed, you could perhaps make it public that it used to exist without saying that you knew about it at the time. That way the public would be aware of the prior vulnerability, but you wouldn't have to admit you found it or ever used it.
+Legal stuff: The DMCA says "No person shall circumvent a technological measure that effectively controls access to a work protected under this title," i.e. you aren't allowed to try and access copyrighted works (including text conversations) you aren't authorized for.
+However, it may be the case that users own the copyrights to their own direct messages. If that is true, then InstaToonz probably doesn't have a case against you--only individual users could sue you for accessing their copyrighted works. That would require them to both know and care about what you did. You would be much safer in this case.

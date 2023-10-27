@@ -1,0 +1,44 @@
+All work by Brendan Banfield
+
+Part 1
+Total time: about 900 ms
+Number of hashes computed: 267516
+Passwords cracked: 2734
+Time spent computing hashes: 734 ms
+Time per hash computed: 0.0027 ms
+Time per password cracked: 0.27 ms, or 0.003 ms after precomputing
+Passwords cracked per number of hashes computed: 0.01
+
+Part 2
+Total time: about 8 1/2 hours
+Number of hashes computed: 267516^2 = 71564810256
+Passwords cracked: 2734
+Time spent computing hashes: 8 and a half hours
+Time per hash computed: 0.0004 ms
+Time per password cracked: 11.2 seconds
+Passwords cracked per number of hashes computed: 3.82 * 10^-8
+Note: I ran two instances of this at once to speed it up and had nothing else open while doing it. This likely explains the disparity in the time per hash compared to Part 1.
+
+Part 3
+Total time: about 10 minutes
+Number of hashes computed: I didn't log this but the expected value is 365694372
+Passwords cracked: 2734
+Time spent computing hashes: 580 seconds
+Time per hash computed: 0.0016 ms
+Time per password cracked: 0.21 seconds
+Passwords cracked per number of hashes computed: 7.5*10^-6
+
+Part 4
+
+
+Analysis:
+- The time computed per hash changed only a little bit. Hashing is the same procedure every time so it should take an equal amount of time, and is more reliant on other processes in the background (and me runnning two instances for part 2)
+- Yes, by an incredible amount--a factor of 34000. The number of hashes we needed to compute changed by a factor of the number of words. Even given my 2x speed increase, this seems like it should be af few times larger. I'm not sure why there's an unexpected speed up. There could be some useful caching behind the scenes
+- 80 bytes for each password/hash mapping for each two-word password gives us:
+  part 1: 267516 passwords = 21.4 MB
+  part 2: 26516^2 passwords = 5.725 TB
+  part 3: 26516 passwords * (16)^8 salts = 9.1 PB
+
+- 1. Prevent attackers who gained database access from being able to log in as other users on your site
+  2. Prevent employees with database access being able to log in as other users
+  3. Prevent anyone with database access from being able to log in to accounts on other sites if users have the same info

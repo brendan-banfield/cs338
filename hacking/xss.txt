@@ -1,0 +1,25 @@
+Part 1
+a. There is one cookie named 'theme' with value 'default'
+b. Yes, the value changed to 'red'.
+c. Every GET request to /fdf/ contains the Cookie tag with a theme--whatever was last selected. For example, one of them could be 'Cookie: theme=red'
+   Whenever you initially load the base page (/fdf/), the response contains a Set-Cookie header with the theme of the loaded page (generally, this will be whatever is in the cookie already. For example. this is a Set-Cookie tag in a reponse: 'theme=default; Expires=Sun, 04 Feb 2024 05:34:54 GMT; Path=/'
+   When changing the theme, it sends a GET request with '?theme=blue' (for example) appended to the URL. This contains the old cookie as well. The servers response comes with a Set-Cookie tag updating the cookie to the color you just chose.
+d. Yes
+e. Every request contains the theme cookie. Whenever you load the page, the cookie is sent automatically and used by the server to determine what color to show you.
+f. When you change the theme it requests the new color page from the server, and the response automatically updates your cookie to that color.
+g. You can edit cookie values in the browser's inspector. When you reload the page, the new cookie will be sent, changing the color.
+h. If you turn intercept on, you can edit the cookie value in the GET request. The new value will be what the server sees so it will be reflected in the response
+i. For Windows Brave, they're stored in the user's \AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Network foldder in a file named Cookies.
+
+Part 2
+a. 1. Moriarty makes a post that contains javascript code
+   2. The client clicks on Moriarty's post and sends a GET request for the post to the server
+   3. The server creates the page to send to the client. In doing so, it unknowingly creates some javacript tags with code in them
+   4. When the client loads the page, the javascript code runs, executing whatever Moriarty wants.
+b. You could redirect to another website that looks the same but with a barely different URL and get the user to enter their username and password, storing it yourself.
+   In my post "Post requiring authentication" I do something similar, replacing most of the html content of the page with a copy/pasted version of the login screen. Once you enter the information, it goes back to the normal post and displays the username and password entered. It doesn't send the data anywhere currently, but it could, and the user wouldn't even be aware.
+c. You could substantially change the content of other user's posts in a few ways. Since the titles appear on the page you make posts on, code put in the title can modify other posts.
+   In a since-deleted or otherwise no longer functional post, I made it so every future post would have "Brendan was here" appended to the end of the title in transparent text (this is before post submission, so the text is actually in the title, not just modified client side). You could make more malicious changes instead, such as making specific users appear to say things that damage their image. It would appear legitimate to the server.
+   Similarly, you can redirect where posts go. One of the example posts, 'my second evil post', makes an alert pop up. I created a copy of the page, except appended "Brendan was here" to the end of the pop up, and added extra code to hide the extra script and make it appear exactly the same. After posting that to the forum, I created another post with title javascript that made clicking the link to the example post instead redirect to my post.
+   You can also hide any posts you don't like. I actually hid lots of my own posts, so that they would execute their title scripts and then be removed to keep them secret. This was done with title code that found posts with specific IDs and deleted the elements
+d. The simplest way is to search user inputs on posts for dangerous tags like '<script>', but this both misses some attacks and fails to catch others. It's preferable to check the page after its created for any script tags that shouldn't be there and remove them.
